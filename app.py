@@ -1,4 +1,3 @@
-
 import streamlit as st
 import anthropic
 import io
@@ -8,7 +7,7 @@ from gtts import gTTS
 from streamlit_mic_recorder import speech_to_text
 
 # ── API Client ─────────────────────────────────────────────────────────────────
-client = anthropic.Anthropic(api_key="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")
+client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PATIENT DATABASE
