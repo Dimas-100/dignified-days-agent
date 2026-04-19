@@ -3,7 +3,10 @@ import anthropic
 import io
 import re
 import json
-from gtts import gTTS
+import base64
+import asyncio
+import edge_tts
+import streamlit.components.v1 as components
 from streamlit_mic_recorder import speech_to_text
 
 # ── API Client ─────────────────────────────────────────────────────────────────
@@ -512,32 +515,43 @@ def clean_for_display(text):
     return text.strip()
 
 def speak(text):
-    """Convert text to speech and force autoplay via hidden HTML audio element."""
+    """Convert text to speech using edge-tts neural voice and autoplay via HTML."""
     try:
-        import base64
-        import streamlit.components.v1 as components
         clean = clean_for_speech(text)
-        tts = gTTS(text=clean, lang='en', slow=False)
+        # Use Microsoft neural voice — sounds natural and warm
+        # Female voices: en-US-JennyNeural, en-US-AriaNeural
+        # Male voices:   en-US-GuyNeural, en-US-DavisNeural
+        voice = "en-US-JennyNeural"
         audio_buffer = io.BytesIO()
-        tts.write_to_fp(audio_buffer)
+
+        async def _synthesize():
+            communicate = edge_tts.Communicate(clean, voice)
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    audio_buffer.write(chunk["data"])
+
+        asyncio.run(_synthesize())
         audio_buffer.seek(0)
         b64 = base64.b64encode(audio_buffer.read()).decode()
-        # Inject a hidden audio element that autoplays immediately
-        # This works because the browser gesture (Start Call button) already happened
+
+        # Use a unique ID per message so each injection is treated as a new element
+        uid = abs(hash(clean)) % 999999
         components.html(
             f"""
-            <audio autoplay style="display:none">
+            <audio id="tts-{uid}" autoplay>
               <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
             </audio>
             <script>
-              var a = document.querySelector('audio');
-              a.play().catch(function() {{}});
+              (function() {{
+                var a = document.getElementById('tts-{uid}');
+                if (a) a.play().catch(function(){{}});
+              }})();
             </script>
             """,
-            height=0,
+            height=1,
         )
-    except Exception:
-        pass
+    except Exception as e:
+        st.caption(f"Audio unavailable: {e}")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -551,12 +565,13 @@ st.divider()
 
 # ── Session State ──────────────────────────────────────────────────────────────
 defaults = {
-    "messages":           [],       # full conversation history for Claude
-    "display_messages":   [],       # what we show in the chat UI
+    "messages":           [],
+    "display_messages":   [],
     "active_agent":       "orchestrator",
-    "agent_log":          [],       # tool call log shown in sidebar
+    "agent_log":          [],
     "call_started":       False,
     "last_spoken":        None,
+    "pending_speech":     None,
     "escalation_summary": ""
 }
 for k, v in defaults.items():
@@ -631,10 +646,10 @@ if not st.session_state.call_started:
         st.session_state.display_messages.append({
             "role": "assistant", "content": GREETING
         })
-        # Seed Claude's history with the greeting as an assistant message
         st.session_state.messages.append({
             "role": "assistant", "content": GREETING
         })
+        st.session_state.pending_speech = GREETING
         st.rerun()
     st.stop()
 
@@ -643,12 +658,12 @@ for msg in st.session_state.display_messages:
     with st.chat_message(msg["role"]):
         st.markdown(clean_for_display(msg["content"]))
 
-# ── Speak Latest ───────────────────────────────────────────────────────────────
-if st.session_state.display_messages:
-    last = st.session_state.display_messages[-1]
-    if last["role"] == "assistant" and last["content"] != st.session_state.last_spoken:
-        speak(last["content"])
-        st.session_state.last_spoken = last["content"]
+# ── Speak Pending ──────────────────────────────────────────────────────────────
+# pending_speech is set before rerun so audio plays after page reloads
+if st.session_state.pending_speech:
+    speak(st.session_state.pending_speech)
+    st.session_state.last_spoken = st.session_state.pending_speech
+    st.session_state.pending_speech = None
 
 # ── Input ──────────────────────────────────────────────────────────────────────
 st.markdown("#### Speak your response:")
@@ -683,7 +698,7 @@ if user_input:
         st.session_state.display_messages.append({"role": "assistant", "content": reply})
         with st.chat_message("assistant"):
             st.markdown(clean_for_display(reply))
-        speak(reply)
-        st.session_state.last_spoken = reply
+        # Set pending_speech BEFORE rerun so it plays after the page reloads
+        st.session_state.pending_speech = reply
 
     st.rerun()
