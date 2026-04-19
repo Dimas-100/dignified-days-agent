@@ -501,13 +501,30 @@ def clean_for_display(text):
     return text.strip()
 
 def speak(text):
+    """Convert text to speech and force autoplay via hidden HTML audio element."""
     try:
+        import base64
+        import streamlit.components.v1 as components
         clean = clean_for_speech(text)
         tts = gTTS(text=clean, lang='en', slow=False)
         audio_buffer = io.BytesIO()
         tts.write_to_fp(audio_buffer)
         audio_buffer.seek(0)
-        st.audio(audio_buffer, format="audio/mp3", autoplay=True)
+        b64 = base64.b64encode(audio_buffer.read()).decode()
+        # Inject a hidden audio element that autoplays immediately
+        # This works because the browser gesture (Start Call button) already happened
+        components.html(
+            f"""
+            <audio autoplay style="display:none">
+              <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            </audio>
+            <script>
+              var a = document.querySelector('audio');
+              a.play().catch(function() {{}});
+            </script>
+            """,
+            height=0,
+        )
     except Exception:
         pass
 
