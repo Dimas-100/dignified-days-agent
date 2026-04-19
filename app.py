@@ -26,6 +26,8 @@ PATIENTS = {
         "dob": "03/12/1942",
         "insurance": "Medicare",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Driver is loaded and departing the warehouse this morning.",
         "technician_notes": "Standard delivery, no special instructions."
     },
     "robert davis": {
@@ -38,6 +40,8 @@ PATIENTS = {
         "dob": "07/23/1938",
         "insurance": "Medicaid",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Driver is en route and on schedule.",
         "technician_notes": "Patient requires oxygen at 2 liters per minute."
     },
     "helen carter": {
@@ -50,6 +54,8 @@ PATIENTS = {
         "dob": "11/05/1945",
         "insurance": "Blue Cross",
         "return_scheduled": True,
+        "delivery_status": "Delivered",
+        "driver_status": "Equipment was successfully delivered. Return pickup scheduled for April 10.",
         "technician_notes": "Return already scheduled for April 10."
     },
     "james wilson": {
@@ -62,6 +68,8 @@ PATIENTS = {
         "dob": "02/14/1940",
         "insurance": "Medicare",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Both items are loaded together and delivery is on schedule.",
         "technician_notes": "Two items on order, deliver together."
     },
     "dorothy harris": {
@@ -74,6 +82,8 @@ PATIENTS = {
         "dob": "09/30/1950",
         "insurance": "Aetna",
         "return_scheduled": False,
+        "delivery_status": "Slight delay",
+        "driver_status": "Driver is running about 45 minutes behind due to traffic. Expected arrival is closer to 3:00 PM.",
         "technician_notes": "Patient prefers afternoon delivery."
     },
     "charles martinez": {
@@ -86,6 +96,8 @@ PATIENTS = {
         "dob": "06/18/1935",
         "insurance": "Medicaid",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Marked urgent. Driver is prioritizing this delivery and is on track for early morning arrival.",
         "technician_notes": "Urgent delivery, patient needs unit by morning."
     },
     "patricia thompson": {
@@ -98,6 +110,8 @@ PATIENTS = {
         "dob": "04/02/1948",
         "insurance": "Medicare",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Both items are confirmed loaded and delivery is on schedule.",
         "technician_notes": "Two items, family prefers morning setup."
     },
     "william anderson": {
@@ -110,6 +124,8 @@ PATIENTS = {
         "dob": "12/27/1943",
         "insurance": "Blue Cross",
         "return_scheduled": True,
+        "delivery_status": "Delivered",
+        "driver_status": "Equipment was successfully delivered. Return pickup is being coordinated with the family.",
         "technician_notes": "Return pickup requested, coordinate with family."
     },
     "barbara jackson": {
@@ -122,6 +138,8 @@ PATIENTS = {
         "dob": "08/15/1952",
         "insurance": "Humana",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Driver is scheduled and on track. First floor delivery noted.",
         "technician_notes": "First floor delivery only, no elevator."
     },
     "richard white": {
@@ -134,6 +152,8 @@ PATIENTS = {
         "dob": "01/09/1937",
         "insurance": "Medicare",
         "return_scheduled": False,
+        "delivery_status": "On time",
+        "driver_status": "Both items confirmed loaded. Family has been notified to speak clearly with the patient.",
         "technician_notes": "Patient is hard of hearing, speak clearly with family."
     }
 }
@@ -381,14 +401,19 @@ CRITICAL RULES:
 DELIVERY_AGENT_SYSTEM = """Your name is Dana. You are a warm and caring AI customer service agent for Dignified Days.
 You are handling a delivery inquiry. The verified patient account is already in the conversation history.
 
-Continue the conversation naturally — do not reintroduce yourself or acknowledge any kind of transfer.
-Just pick up exactly where the conversation left off and help the caller efficiently.
+Continue the conversation naturally — do not reintroduce yourself, do not acknowledge any handoff.
+Just answer the caller directly and helpfully as if you have always had this information.
 
-Your job:
-- Confirm the delivery date and window clearly and warmly.
-- Answer any questions about the delivery.
-- Use schedule_return_pickup if the caller also wants to arrange a return.
-- Use escalate_to_human_csr if the issue cannot be resolved.
+The patient record includes these fields you must use to answer questions:
+- delivery_status: whether the order is on time, delayed, or delivered
+- driver_status: specific real-time detail about where the driver is or what is happening
+- delivery_date and delivery_window: the scheduled date and time
+
+When someone asks if there are delays or if it will arrive on time, answer using delivery_status
+and driver_status directly. Give them a real, specific answer — not a vague one.
+
+Use schedule_return_pickup if the caller wants to arrange a return.
+Use escalate_to_human_csr only if the issue truly cannot be resolved.
 
 Keep responses short, warm, and to the point. No bullet points, headers, or emojis.
 Never say certainly or absolutely. These families are going through a very hard time."""
