@@ -1,0 +1,4 @@
+streamlit
+anthropic
+gtts
+streamlit-mic-recorder
