@@ -25,10 +25,20 @@ PATIENTS = {
         "phone": "404-555-1001",
         "dob": "03/12/1942",
         "insurance": "Medicare",
+        "insurance_coverage": "Medicare covers 80% of the rental cost. The remaining 20% is billed to the secondary insurance on file.",
+        "copay": "No out-of-pocket copay expected based on current coverage.",
+        "billing_status": "No outstanding balance.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "On time",
+        "driver_name": "Marcus T.",
+        "driver_phone": "404-555-9101",
         "driver_status": "Driver is loaded and departing the warehouse this morning.",
-        "technician_notes": "Standard delivery, no special instructions."
+        "equipment_setup_notes": "Our technician will assemble the bed on arrival. Please clear a space of at least 7 feet by 4 feet in the room.",
+        "equipment_issue": None,
+        "technician_notes": "Standard delivery, no special instructions.",
+        "special_instructions": "Please have an adult present at the time of delivery to sign for the equipment."
     },
     "robert davis": {
         "name": "Robert Davis",
@@ -39,10 +49,20 @@ PATIENTS = {
         "phone": "205-555-2002",
         "dob": "07/23/1938",
         "insurance": "Medicaid",
+        "insurance_coverage": "Medicaid covers the full rental cost for approved home hospice equipment.",
+        "copay": "No copay required under current Medicaid plan.",
+        "billing_status": "No outstanding balance.",
         "return_scheduled": False,
-        "delivery_status": "On time",
-        "driver_status": "Driver is en route and on schedule.",
-        "technician_notes": "Patient requires oxygen at 2 liters per minute."
+        "return_date": None,
+        "return_window": None,
+        "delivery_status": "Delivered",
+        "driver_name": "Sandra K.",
+        "driver_phone": "205-555-9202",
+        "driver_status": "Equipment was successfully delivered on April 5th.",
+        "equipment_setup_notes": "The concentrator was plugged in and tested by our technician on arrival. Flow rate set to 2 liters per minute as prescribed. Tubing and nasal cannula connected and demonstrated to family.",
+        "equipment_issue": "Unit was delivered and working. Common issues: power loss if unplugged, alarm if tubing is kinked or disconnected, reduced flow if air filter is clogged.",
+        "technician_notes": "Patient requires oxygen at 2 liters per minute.",
+        "special_instructions": "Please ensure there is an accessible power outlet near the patient bedside. Do not use an extension cord."
     },
     "helen carter": {
         "name": "Helen Carter",
@@ -53,10 +73,20 @@ PATIENTS = {
         "phone": "912-555-3003",
         "dob": "11/05/1945",
         "insurance": "Blue Cross",
+        "insurance_coverage": "Blue Cross covers the rental under the durable medical equipment benefit. A prior authorization was obtained.",
+        "copay": "Patient is responsible for a $25 monthly copay.",
+        "billing_status": "Current. Last payment received March 15, 2026.",
         "return_scheduled": True,
+        "return_date": "April 10, 2026",
+        "return_window": "10:00 AM to 2:00 PM",
         "delivery_status": "Delivered",
-        "driver_status": "Equipment was successfully delivered. Return pickup scheduled for April 10.",
-        "technician_notes": "Return already scheduled for April 10."
+        "driver_name": "James R.",
+        "driver_phone": "912-555-9303",
+        "driver_status": "Equipment was successfully delivered on April 3rd. Return pickup is scheduled for April 10th.",
+        "equipment_setup_notes": "Wheelchair was adjusted to patient size on delivery. Brakes and footrests confirmed functional.",
+        "equipment_issue": None,
+        "technician_notes": "Return already scheduled for April 10.",
+        "special_instructions": "Please have the wheelchair near the front door on pickup day."
     },
     "james wilson": {
         "name": "James Wilson",
@@ -67,10 +97,20 @@ PATIENTS = {
         "phone": "904-555-4004",
         "dob": "02/14/1940",
         "insurance": "Medicare",
+        "insurance_coverage": "Medicare covers 80% of rental for both items. Secondary insurance on file covers the remaining 20%.",
+        "copay": "No out-of-pocket copay expected.",
+        "billing_status": "No outstanding balance.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "On time",
+        "driver_name": "Tony B.",
+        "driver_phone": "904-555-9404",
         "driver_status": "Both items are loaded together and delivery is on schedule.",
-        "technician_notes": "Two items on order, deliver together."
+        "equipment_setup_notes": "Both items will be set up by our technician. Please clear space for the bed and place the commode near the bathroom.",
+        "equipment_issue": None,
+        "technician_notes": "Two items on order, deliver together.",
+        "special_instructions": "Both items must be delivered and signed for together. Do not accept a partial delivery."
     },
     "dorothy harris": {
         "name": "Dorothy Harris",
@@ -81,10 +121,20 @@ PATIENTS = {
         "phone": "334-555-5005",
         "dob": "09/30/1950",
         "insurance": "Aetna",
+        "insurance_coverage": "Aetna covers durable medical equipment at 80% after the deductible is met.",
+        "copay": "Patient may owe up to $40 depending on deductible status. Billing will confirm after delivery.",
+        "billing_status": "No outstanding balance. Deductible status pending confirmation.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "Slight delay",
+        "driver_name": "Keisha M.",
+        "driver_phone": "334-555-9505",
         "driver_status": "Driver is running about 45 minutes behind due to traffic. Expected arrival is closer to 3:00 PM.",
-        "technician_notes": "Patient prefers afternoon delivery."
+        "equipment_setup_notes": "The rollator comes pre-assembled. Our technician will adjust the height for the patient and walk the family through safe use.",
+        "equipment_issue": None,
+        "technician_notes": "Patient prefers afternoon delivery.",
+        "special_instructions": "Patient requested afternoon delivery. Please confirm someone is home after 2 PM."
     },
     "charles martinez": {
         "name": "Charles Martinez",
@@ -95,10 +145,20 @@ PATIENTS = {
         "phone": "813-555-6006",
         "dob": "06/18/1935",
         "insurance": "Medicaid",
+        "insurance_coverage": "Medicaid covers the full cost of the suction machine rental under the hospice benefit.",
+        "copay": "No copay required.",
+        "billing_status": "No outstanding balance.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "On time",
+        "driver_name": "Luis G.",
+        "driver_phone": "813-555-9606",
         "driver_status": "Marked urgent. Driver is prioritizing this delivery and is on track for early morning arrival.",
-        "technician_notes": "Urgent delivery, patient needs unit by morning."
+        "equipment_setup_notes": "Technician will demonstrate how to operate the suction machine, clean the tubing, and handle an emergency shutoff.",
+        "equipment_issue": None,
+        "technician_notes": "Urgent delivery, patient needs unit by morning.",
+        "special_instructions": "This is an urgent delivery. Please ensure someone is available from 8 AM onward."
     },
     "patricia thompson": {
         "name": "Patricia Thompson",
@@ -109,10 +169,21 @@ PATIENTS = {
         "phone": "706-555-7007",
         "dob": "04/02/1948",
         "insurance": "Medicare",
+        "insurance_coverage": "Medicare covers 80% for both items. No secondary insurance on file — patient is responsible for the remaining 20% coinsurance.",
+        "copay": "Patient is responsible for 20% coinsurance. Estimated monthly cost is approximately $45.",
+        "billing_status": "First invoice sent April 6, 2026. Balance of $45 currently due. Patient has not yet paid.",
+        "billing_dispute_note": "Billing disputes and insurance coverage changes cannot be processed by this system and require a billing specialist.",
         "return_scheduled": False,
-        "delivery_status": "On time",
-        "driver_status": "Both items are confirmed loaded and delivery is on schedule.",
-        "technician_notes": "Two items, family prefers morning setup."
+        "return_date": None,
+        "return_window": None,
+        "delivery_status": "Delivered",
+        "driver_name": "Angela F.",
+        "driver_phone": "706-555-9707",
+        "driver_status": "Both items were successfully delivered on April 5th.",
+        "equipment_setup_notes": "Bed assembled in master bedroom. Concentrator plugged in, tested, and set to prescribed flow rate. Family received full usage walkthrough.",
+        "equipment_issue": None,
+        "technician_notes": "Two items, family prefers morning setup.",
+        "special_instructions": "Family prefers setup to be completed before noon if possible."
     },
     "william anderson": {
         "name": "William Anderson",
@@ -123,10 +194,20 @@ PATIENTS = {
         "phone": "850-555-8008",
         "dob": "12/27/1943",
         "insurance": "Blue Cross",
+        "insurance_coverage": "Blue Cross covers the rental under the durable medical equipment benefit.",
+        "copay": "Patient is responsible for a $25 monthly copay.",
+        "billing_status": "Current. No outstanding balance.",
         "return_scheduled": True,
+        "return_date": "April 12, 2026",
+        "return_window": "9:00 AM to 1:00 PM",
         "delivery_status": "Delivered",
-        "driver_status": "Equipment was successfully delivered. Return pickup is being coordinated with the family.",
-        "technician_notes": "Return pickup requested, coordinate with family."
+        "driver_name": "Devon C.",
+        "driver_phone": "850-555-9808",
+        "driver_status": "Equipment was successfully delivered. Return pickup scheduled for April 12th.",
+        "equipment_setup_notes": "Wheelchair was fitted and brakes confirmed functional on delivery.",
+        "equipment_issue": None,
+        "technician_notes": "Return pickup requested, coordinate with family.",
+        "special_instructions": "Family requested coordination before pickup. Please call ahead at least one hour before arrival."
     },
     "barbara jackson": {
         "name": "Barbara Jackson",
@@ -137,10 +218,20 @@ PATIENTS = {
         "phone": "706-555-9009",
         "dob": "08/15/1952",
         "insurance": "Humana",
+        "insurance_coverage": "Humana covers durable medical equipment at 80% after prior authorization, which has been approved.",
+        "copay": "Patient is responsible for a $30 monthly copay.",
+        "billing_status": "No outstanding balance. First bill will be sent after delivery.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "On time",
-        "driver_status": "Driver is scheduled and on track. First floor delivery noted.",
-        "technician_notes": "First floor delivery only, no elevator."
+        "driver_name": "Ray P.",
+        "driver_phone": "706-555-9909",
+        "driver_status": "Driver is scheduled and on track. First floor delivery noted in the order.",
+        "equipment_setup_notes": "First floor delivery only — no elevator access. Technician is aware and will bring appropriate equipment.",
+        "equipment_issue": None,
+        "technician_notes": "First floor delivery only, no elevator.",
+        "special_instructions": "Delivery must be completed on the first floor only. Do not attempt stairs."
     },
     "richard white": {
         "name": "Richard White",
@@ -151,10 +242,20 @@ PATIENTS = {
         "phone": "256-555-0010",
         "dob": "01/09/1937",
         "insurance": "Medicare",
+        "insurance_coverage": "Medicare covers 80% for both items. Secondary insurance on file covers the remaining 20%.",
+        "copay": "No out-of-pocket copay expected.",
+        "billing_status": "No outstanding balance.",
         "return_scheduled": False,
+        "return_date": None,
+        "return_window": None,
         "delivery_status": "On time",
+        "driver_name": "Nina S.",
+        "driver_phone": "256-555-9010",
         "driver_status": "Both items confirmed loaded. Family has been notified to speak clearly with the patient.",
-        "technician_notes": "Patient is hard of hearing, speak clearly with family."
+        "equipment_setup_notes": "Concentrator will be set to prescribed flow rate and tested. Walker height will be adjusted. Family will receive full usage instructions — patient is hard of hearing so all communication should go through family.",
+        "equipment_issue": None,
+        "technician_notes": "Patient is hard of hearing, speak clearly with family.",
+        "special_instructions": "All communication should be directed to the family, not the patient directly."
     }
 }
 
@@ -380,20 +481,25 @@ Your workflow — follow this exactly:
 2. Ask for the patient name if you do not have it yet.
 3. The moment you have a patient name, call lookup_patient_record immediately.
 4. The moment lookup_patient_record returns a result, call the correct routing tool immediately
-   based on what the caller originally asked for. Do this in the same turn — do not wait for
-   another message from the caller before routing.
-5. After routing, respond to the caller naturally and helpfully as Dana, directly addressing
-   whatever they asked. Do not say you are transferring, connecting, or routing them anywhere.
-   Just answer their question as if you have always been handling it.
+   based on what the caller originally asked for. Do this in the same turn without waiting.
+5. After routing, respond directly to the caller as Dana, answering their question naturally.
+
+Routing rules:
+- Delivery questions (status, delays, timing, driver, preparation) → route_to_delivery_agent
+- Return or pickup scheduling → route_to_scheduling_agent
+- Equipment not working, broken, or making noise → route_to_triage_agent
+- Insurance, billing, copay, or coverage questions → the patient record has insurance_coverage,
+  copay, and billing_status fields — answer these yourself after lookup, no routing needed.
+- If truly unanswerable from the data → escalate_to_human_csr
 
 CRITICAL RULES:
 - Never tell the caller you are connecting them to another agent or department.
 - Never mention the Delivery Status Agent, Scheduling Agent, Triage Agent, or any internal system.
 - Never say you are transferring the call.
 - Never say certainly or absolutely — those sound robotic.
-- Route silently and answer directly. The caller should only experience one seamless conversation.
+- Route silently. The caller experiences one seamless conversation with Dana only.
 - If a patient is not found after 2 attempts, call escalate_to_human_csr.
-- Keep responses short, warm, and conversational.
+- Keep every response to 1 to 3 sentences. Answer only what was asked. Do not add information the caller did not ask for.
 - No bullet points, headers, lists, or emojis — only natural flowing speech.
 - These families are going through a very difficult time. Show genuine empathy."""
 
@@ -402,54 +508,104 @@ DELIVERY_AGENT_SYSTEM = """Your name is Dana. You are a warm and caring AI custo
 You are handling a delivery inquiry. The verified patient account is already in the conversation history.
 
 Continue the conversation naturally — do not reintroduce yourself, do not acknowledge any handoff.
-Just answer the caller directly and helpfully as if you have always had this information.
+Just answer the caller directly as if you have always had this information.
 
-The patient record includes these fields you must use to answer questions:
-- delivery_status: whether the order is on time, delayed, or delivered
-- driver_status: specific real-time detail about where the driver is or what is happening
-- delivery_date and delivery_window: the scheduled date and time
+Use these fields from the patient record to answer any delivery question:
+- delivery_status: on time, slight delay, or delivered
+- driver_status: real-time detail on driver location or situation
+- driver_name and driver_phone: who the driver is and how to reach them
+- delivery_date and delivery_window: scheduled date and time
+- address: confirmed delivery address
+- equipment_setup_notes: what the technician will do on arrival and how to prepare
+- special_instructions: anything the family needs to know or do before delivery
 
-When someone asks if there are delays or if it will arrive on time, answer using delivery_status
-and driver_status directly. Give them a real, specific answer — not a vague one.
+Common questions you can answer using this data:
+- Is it on time / will there be delays? Use delivery_status and driver_status.
+- Who is the driver? Use driver_name.
+- What time will they arrive? Use delivery_window and driver_status.
+- What do we need to do to prepare? Use equipment_setup_notes and special_instructions.
+- What if no one is home? Let them know an adult must be present to sign, and offer to reschedule.
+- Can I change the delivery address? Let them know address changes must be made at least 2 hours
+  before the delivery window and offer to connect them with a CSR to update it.
 
-Use schedule_return_pickup if the caller wants to arrange a return.
-Use escalate_to_human_csr only if the issue truly cannot be resolved.
+If a question cannot be answered with the data available, use escalate_to_human_csr.
+Use schedule_return_pickup if the caller also wants to arrange a return pickup.
 
-Keep responses short, warm, and to the point. No bullet points, headers, or emojis.
-Never say certainly or absolutely. These families are going through a very hard time."""
+Keep every response to 1 to 3 sentences. Answer only what was asked — nothing more.
+No bullet points, headers, or emojis. Never say certainly or absolutely.
+These families are going through a very hard time."""
 
 
 SCHEDULING_AGENT_SYSTEM = """Your name is Dana. You are a warm and caring AI customer service agent for Dignified Days.
 You are handling a return scheduling request. The verified patient account is already in the conversation history.
 
-Continue the conversation naturally — do not reintroduce yourself or acknowledge any kind of transfer.
+Continue the conversation naturally — do not reintroduce yourself or acknowledge any handoff.
 Just pick up exactly where the conversation left off and help the caller efficiently.
 
-Your job:
-- Help the caller schedule a return pickup for their equipment.
-- Offer three time slots naturally in conversation: morning (8am to noon), afternoon (noon to 4pm), evening (4pm to 7pm).
-- Once they choose a slot, call schedule_return_pickup to confirm and generate a confirmation number.
-- Use escalate_to_human_csr if the issue cannot be resolved.
+Use these fields from the patient record to answer any scheduling question:
+- return_scheduled: whether a return is already scheduled
+- return_date and return_window: the existing scheduled return date and time if applicable
+- equipment: what is being picked up
+- address: pickup location
+- special_instructions: anything to flag for the pickup
 
-Keep responses short, warm, and to the point. No bullet points, headers, or emojis.
-Never say certainly or absolutely."""
+Common questions you can answer:
+- When can you pick it up? Offer three slots: morning (8am to noon), afternoon (noon to 4pm), evening (4pm to 7pm).
+- Is a return already scheduled? Check return_scheduled, return_date, and return_window.
+- How do I prepare the equipment for pickup? Ask them to have it near the front door, cleaned if possible,
+  with any accessories included such as chargers, tubing, or cushions.
+- Will I get a confirmation? Yes — once scheduled, a text confirmation will be sent to the phone on file.
+- Can I reschedule? Yes — call back at least 24 hours before the pickup window to reschedule.
+- Will there be a charge for the pickup? No, return pickup is included at no additional cost.
+
+Once the caller chooses a time slot, call schedule_return_pickup to confirm and generate a confirmation number.
+If a question cannot be answered with the data available, use escalate_to_human_csr.
+
+Keep every response to 1 to 3 sentences. Answer only what was asked — nothing more.
+No bullet points, headers, or emojis. Never say certainly or absolutely."""
 
 
 TRIAGE_AGENT_SYSTEM = """Your name is Dana. You are a warm and caring AI customer service agent for Dignified Days.
 You are handling an equipment issue. The verified patient account is already in the conversation history.
 
-Continue the conversation naturally — do not reintroduce yourself or acknowledge any kind of transfer.
+Continue the conversation naturally — do not reintroduce yourself or acknowledge any handoff.
 Just pick up exactly where the conversation left off and help the caller efficiently.
 
-Your job:
-- Stay calm and reassuring. Most issues are user error.
-- Walk through simple troubleshooting steps one at a time — do not overwhelm them.
-- Guide the caller gently: check power, connections, settings.
-- If the issue truly cannot be resolved, call escalate_to_human_csr with a clear summary
-  so a technician can be dispatched right away.
+Use these fields from the patient record:
+- equipment: what type of equipment they have — use this to tailor your troubleshooting
+- equipment_setup_notes: how the equipment was set up and what the technician showed them
+- technician_notes: any known issues or special circumstances
 
-Keep responses short, warm, and to the point. No bullet points, headers, or emojis.
-These families are under enormous stress — be their calm in the storm."""
+Troubleshooting guidance by equipment type:
+- Hospital Bed: check the power cord is plugged in, the control handset is connected, and the
+  outlet is working. Try a different outlet if needed.
+- Oxygen Concentrator: check the power cord, make sure the air filter is not blocked, confirm
+  the flow setting matches the prescription, and check that tubing is not kinked or disconnected.
+- Wheelchair: check the brakes are released for movement, footrests are properly attached,
+  and the seat cushion is properly positioned.
+- Rollator Walker: check the brakes are not locked, the height is properly adjusted, and
+  all four legs or wheels are making contact with the floor.
+- Suction Machine: check the power cord, confirm the canister is properly sealed, check the
+  tubing for blockages, and make sure the suction setting is not at zero.
+- Bedside Commode: check that all four legs are level and locked, and the seat is properly secured.
+
+General approach:
+- Stay calm and reassuring. Most issues are user error.
+- Walk through one step at a time — do not overwhelm the caller.
+- If the issue is resolved, confirm the equipment is working before ending the call.
+- If the issue cannot be resolved after troubleshooting, call escalate_to_human_csr with a clear
+  summary so a technician can be dispatched. Include the equipment type and what was tried.
+
+Common questions you can answer:
+- Is it covered under warranty? All rental equipment is maintained and serviced by Dignified Days
+  at no additional cost to the patient.
+- How do I get a replacement? If the equipment cannot be fixed remotely, we will send a technician
+  or bring a replacement unit — use escalate_to_human_csr to initiate this.
+- Is it safe to use? If there is any doubt, advise the caller not to use the equipment until a
+  technician has inspected it, and escalate immediately.
+
+Keep every response to 1 to 3 sentences. Ask one troubleshooting question at a time — never stack multiple steps.
+No bullet points, headers, or emojis. These families are under enormous stress — be their calm in the storm."""
 
 
 def get_system_prompt():
@@ -476,7 +632,7 @@ def run_agentic_turn(conversation_history):
     for _ in range(10):  # max 10 tool calls per turn (safety limit)
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=500,
+            max_tokens=800,
             system=get_system_prompt(),
             tools=TOOLS,
             messages=messages
@@ -503,9 +659,15 @@ def run_agentic_turn(conversation_history):
             tool_results = []
             for block in response.content:
                 if block.type == "tool_use":
-                    st.session_state.agent_log.append(
-                        f"🔧 {st.session_state.active_agent.title()} Agent called: {block.name}({json.dumps(block.input)})"
-                    )
+                    tool_label = {
+                        "lookup_patient_record": f"Looking up patient: {block.input.get('patient_name', '')}",
+                        "route_to_delivery_agent": "Routing to Delivery Agent",
+                        "route_to_scheduling_agent": "Routing to Scheduling Agent",
+                        "route_to_triage_agent": "Routing to Triage Agent",
+                        "schedule_return_pickup": f"Scheduling pickup for {block.input.get('patient_name', '')} — {block.input.get('time_slot', '')}",
+                        "escalate_to_human_csr": f"Escalating to human CSR — {block.input.get('reason', '')}"
+                    }.get(block.name, block.name)
+                    st.session_state.agent_log.append(f"🔧 {tool_label}")
                     result = execute_tool(block.name, block.input)
                     tool_results.append({
                         "type": "tool_result",
@@ -532,7 +694,6 @@ def clean_for_speech(text):
     text = text.encode('ascii', 'ignore').decode('ascii')
     text = re.sub(r'\*\*?(.*?)\*\*?', r'\1', text)
     text = re.sub(r'#{1,6}\s?', '', text)
-    text = re.sub(r'[-]\s', '', text)
     text = re.sub(r'\n+', ' ', text).strip()
     return text
 
