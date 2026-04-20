@@ -796,9 +796,127 @@ def speak(text):
 # ══════════════════════════════════════════════════════════════════════════════
 
 st.set_page_config(page_title="Dignified Days Support", page_icon="🏥", layout="centered")
-st.markdown("## Dignified Days — AI Customer Support Line")
-st.markdown("*Compassionate care, powered by intelligent technology*")
-st.divider()
+
+# ── Custom Styling ─────────────────────────────────────────────────────────────
+st.markdown("""
+<style>
+/* ── Page background ── */
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
+}
+
+/* ── Sidebar styling ── */
+[data-testid="stSidebar"] {
+    background: #0d2d4a;
+    color: white;
+}
+[data-testid="stSidebar"] * {
+    color: white !important;
+}
+[data-testid="stSidebar"] h3 {
+    color: #4fc3f7 !important;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+}
+[data-testid="stSidebar"] .stButton button {
+    background: #1a4a6e;
+    border: 1px solid #4fc3f7;
+    color: white !important;
+    border-radius: 8px;
+}
+[data-testid="stSidebar"] .stButton button:hover {
+    background: #4fc3f7;
+    color: #0d2d4a !important;
+}
+
+/* ── Chat bubbles ── */
+[data-testid="stChatMessage"] {
+    border-radius: 12px;
+    padding: 4px;
+}
+
+/* ── Main header card ── */
+.header-card {
+    background: linear-gradient(135deg, #0d2d4a 0%, #1565c0 100%);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-bottom: 24px;
+    color: white;
+}
+.header-card h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+.header-card p {
+    font-size: 0.95rem;
+    margin: 4px 0 0 0;
+    color: #90caf9;
+}
+
+/* ── Agent status pill in sidebar ── */
+.agent-pill {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 6px;
+    letter-spacing: 0.03em;
+}
+
+/* ── Start screen ── */
+.start-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin: 20px 0;
+}
+
+/* ── Spinner text ── */
+[data-testid="stSpinner"] {
+    color: #1565c0;
+}
+
+/* ── Input area ── */
+[data-testid="stChatInput"] {
+    border-radius: 12px;
+}
+
+/* ── Divider color ── */
+hr {
+    border-color: #1a4a6e !important;
+    opacity: 0.3;
+}
+
+/* ── Table in sidebar ── */
+[data-testid="stSidebar"] table {
+    font-size: 0.72rem;
+    width: 100%;
+}
+[data-testid="stSidebar"] td, [data-testid="stSidebar"] th {
+    padding: 3px 6px;
+    color: #cfe8ff !important;
+}
+[data-testid="stSidebar"] th {
+    color: #4fc3f7 !important;
+    border-bottom: 1px solid #1a4a6e;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ── Header ─────────────────────────────────────────────────────────────────────
+st.markdown("""
+<div class="header-card">
+    <h1>🏥 Dignified Days</h1>
+    <p>AI-Powered Customer Support Line &nbsp;·&nbsp; Compassionate care, powered by intelligent technology</p>
+</div>
+""", unsafe_allow_html=True)
 
 # ── Session State ──────────────────────────────────────────────────────────────
 defaults = {
@@ -823,13 +941,21 @@ if st.session_state.pending_agent:
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
+    st.markdown("""
+    <div style="text-align:center; padding: 12px 0 20px 0;">
+        <div style="font-size:2rem;">🏥</div>
+        <div style="font-size:1rem; font-weight:700; color:#4fc3f7; letter-spacing:0.05em;">DIGNIFIED DAYS</div>
+        <div style="font-size:0.7rem; color:#90caf9; margin-top:2px;">AI Support System</div>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("### Active Agent")
     agent_labels = {
-        "orchestrator": "Orchestrator Agent",
-        "delivery":     "Delivery Status Agent",
-        "scheduling":   "Return Scheduling Agent",
-        "triage":       "Equipment Triage Agent",
-        "escalate":     "Transferred to Human CSR"
+        "orchestrator": "🎯 Orchestrator Agent",
+        "delivery":     "🚚 Delivery Status Agent",
+        "scheduling":   "📅 Return Scheduling Agent",
+        "triage":       "🔧 Equipment Triage Agent",
+        "escalate":     "👤 Transferred to Human CSR"
     }
     agent_colors = {
         "orchestrator": "info",
@@ -884,9 +1010,17 @@ with st.sidebar:
 
 # ── Start Call ─────────────────────────────────────────────────────────────────
 if not st.session_state.call_started:
-    st.markdown("### Press the button below to begin the call")
-    st.markdown("*This allows Dana's voice to play automatically in your browser.*")
-    if st.button("Start Call", use_container_width=True, type="primary"):
+    st.markdown("""
+    <div class="start-card">
+        <div style="font-size:3rem; margin-bottom:12px;">📞</div>
+        <h2 style="color:#0d2d4a; margin:0 0 8px 0;">Ready to Begin</h2>
+        <p style="color:#546e7a; margin:0 0 24px 0; font-size:0.95rem;">
+            This demo simulates a multi-agent AI system handling inbound customer service calls
+            for Dignified Days home hospice medical equipment.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("📞 Start Call", use_container_width=True, type="primary"):
         st.session_state.call_started = True
         st.session_state.display_messages.append({
             "role": "assistant", "content": GREETING
@@ -911,7 +1045,10 @@ if st.session_state.pending_speech:
     st.session_state.pending_speech = None
 
 # ── Input ──────────────────────────────────────────────────────────────────────
-st.markdown("#### Speak your response:")
+st.markdown("""
+<div style="margin: 8px 0 4px 0; color:#546e7a; font-size:0.85rem; font-weight:600; 
+letter-spacing:0.05em; text-transform:uppercase;">🎙️ Speak your response</div>
+""", unsafe_allow_html=True)
 spoken_text = speech_to_text(
     language='en',
     just_once=True,
