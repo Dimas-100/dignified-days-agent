@@ -800,15 +800,23 @@ st.set_page_config(page_title="Dignified Days Support", page_icon="🏥", layout
 # ── Custom Styling ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ── Page background ── */
+/* ════════════════════════════════════════════
+   LIGHT MODE
+════════════════════════════════════════════ */
+
+/* Page background */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
 }
 
-/* ── Sidebar styling ── */
+/* Main content area */
+[data-testid="stMain"] {
+    background: transparent;
+}
+
+/* Sidebar */
 [data-testid="stSidebar"] {
-    background: #0d2d4a;
-    color: white;
+    background: #0d2d4a !important;
 }
 [data-testid="stSidebar"] * {
     color: white !important;
@@ -821,23 +829,23 @@ st.markdown("""
     margin-bottom: 4px;
 }
 [data-testid="stSidebar"] .stButton button {
-    background: #1a4a6e;
-    border: 1px solid #4fc3f7;
+    background: #1a4a6e !important;
+    border: 1px solid #4fc3f7 !important;
     color: white !important;
     border-radius: 8px;
 }
 [data-testid="stSidebar"] .stButton button:hover {
-    background: #4fc3f7;
+    background: #4fc3f7 !important;
     color: #0d2d4a !important;
 }
 
-/* ── Chat bubbles ── */
+/* Chat bubbles */
 [data-testid="stChatMessage"] {
     border-radius: 12px;
     padding: 4px;
 }
 
-/* ── Main header card ── */
+/* Header card — always dark regardless of mode */
 .header-card {
     background: linear-gradient(135deg, #0d2d4a 0%, #1565c0 100%);
     border-radius: 16px;
@@ -849,26 +857,15 @@ st.markdown("""
     font-size: 1.6rem;
     font-weight: 700;
     margin: 0;
-    color: white;
+    color: white !important;
 }
 .header-card p {
     font-size: 0.95rem;
     margin: 4px 0 0 0;
-    color: #90caf9;
+    color: #90caf9 !important;
 }
 
-/* ── Agent status pill in sidebar ── */
-.agent-pill {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-top: 6px;
-    letter-spacing: 0.03em;
-}
-
-/* ── Start screen ── */
+/* Start screen card — light mode */
 .start-card {
     background: white;
     border-radius: 16px;
@@ -877,24 +874,35 @@ st.markdown("""
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     margin: 20px 0;
 }
-
-/* ── Spinner text ── */
-[data-testid="stSpinner"] {
-    color: #1565c0;
+.start-card h2 {
+    color: #0d2d4a !important;
+}
+.start-card p {
+    color: #546e7a !important;
 }
 
-/* ── Input area ── */
+/* Input label */
+.input-label {
+    color: #546e7a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 8px 0 4px 0;
+}
+
+/* Chat input */
 [data-testid="stChatInput"] {
     border-radius: 12px;
 }
 
-/* ── Divider color ── */
+/* Divider */
 hr {
     border-color: #1a4a6e !important;
     opacity: 0.3;
 }
 
-/* ── Table in sidebar ── */
+/* Sidebar table */
 [data-testid="stSidebar"] table {
     font-size: 0.72rem;
     width: 100%;
@@ -906,6 +914,56 @@ hr {
 [data-testid="stSidebar"] th {
     color: #4fc3f7 !important;
     border-bottom: 1px solid #1a4a6e;
+}
+
+/* ════════════════════════════════════════════
+   DARK MODE
+════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+
+    /* Page background — deep dark blue instead of near-black */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 100%) !important;
+    }
+
+    [data-testid="stMain"] {
+        background: transparent !important;
+    }
+
+    /* Start card in dark mode */
+    .start-card {
+        background: #0d2d4a !important;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
+    }
+    .start-card h2 {
+        color: #e3f2fd !important;
+    }
+    .start-card p {
+        color: #90caf9 !important;
+    }
+
+    /* Input label in dark mode */
+    .input-label {
+        color: #90caf9 !important;
+    }
+
+    /* Chat messages in dark mode */
+    [data-testid="stChatMessage"] {
+        background: rgba(255,255,255,0.04) !important;
+        border: 1px solid rgba(255,255,255,0.07) !important;
+        border-radius: 12px;
+    }
+
+    /* Divider in dark mode */
+    hr {
+        border-color: #4fc3f7 !important;
+        opacity: 0.15 !important;
+    }
+
+    /* Spinner in dark mode */
+    [data-testid="stSpinner"] p {
+        color: #90caf9 !important;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -1046,8 +1104,7 @@ if st.session_state.pending_speech:
 
 # ── Input ──────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div style="margin: 8px 0 4px 0; color:#546e7a; font-size:0.85rem; font-weight:600; 
-letter-spacing:0.05em; text-transform:uppercase;">🎙️ Speak your response</div>
+<div class="input-label">🎙️ Speak your response</div>
 """, unsafe_allow_html=True)
 spoken_text = speech_to_text(
     language='en',
