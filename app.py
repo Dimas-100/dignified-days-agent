@@ -441,16 +441,19 @@ def execute_tool(tool_name, tool_input):
 
     elif tool_name == "route_to_delivery_agent":
         st.session_state.active_agent = "delivery"
+        st.session_state.pending_agent = "delivery"
         st.session_state.agent_log.append("→ Routed to Delivery Status Agent")
         return json.dumps({"status": "routed", "agent": "delivery"})
 
     elif tool_name == "route_to_scheduling_agent":
         st.session_state.active_agent = "scheduling"
+        st.session_state.pending_agent = "scheduling"
         st.session_state.agent_log.append("→ Routed to Return Scheduling Agent")
         return json.dumps({"status": "routed", "agent": "scheduling"})
 
     elif tool_name == "route_to_triage_agent":
         st.session_state.active_agent = "triage"
+        st.session_state.pending_agent = "triage"
         st.session_state.agent_log.append("→ Routed to Equipment Triage Agent")
         return json.dumps({"status": "routed", "agent": "triage"})
 
@@ -470,6 +473,7 @@ def execute_tool(tool_name, tool_input):
 
     elif tool_name == "escalate_to_human_csr":
         st.session_state.active_agent = "escalate"
+        st.session_state.pending_agent = "escalate"
         st.session_state.escalation_summary = tool_input.get("summary", "")
         st.session_state.agent_log.append(
             f"⚠ Escalated to human CSR — {tool_input.get('reason', '')}"
@@ -798,6 +802,7 @@ defaults = {
     "messages":           [],
     "display_messages":   [],
     "active_agent":       "orchestrator",
+    "pending_agent":      None,
     "agent_log":          [],
     "call_started":       False,
     "last_spoken":        None,
@@ -807,6 +812,11 @@ defaults = {
 for k, v in defaults.items():
     if k not in st.session_state:
         st.session_state[k] = v
+
+# ── Apply pending agent before sidebar renders ─────────────────────────────────
+if st.session_state.pending_agent:
+    st.session_state.active_agent = st.session_state.pending_agent
+    st.session_state.pending_agent = None
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
