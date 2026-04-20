@@ -17,6 +17,7 @@ client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
 # ══════════════════════════════════════════════════════════════════════════════
 PATIENTS = {
     "margaret johnson": {
+        "order_number": "DD-10001",
         "name": "Margaret Johnson",
         "equipment": "Hospital Bed",
         "delivery_date": "April 4, 2026",
@@ -41,6 +42,7 @@ PATIENTS = {
         "special_instructions": "Please have an adult present at the time of delivery to sign for the equipment."
     },
     "robert davis": {
+        "order_number": "DD-10002",
         "name": "Robert Davis",
         "equipment": "Oxygen Concentrator",
         "delivery_date": "April 5, 2026",
@@ -65,6 +67,7 @@ PATIENTS = {
         "special_instructions": "Please ensure there is an accessible power outlet near the patient bedside. Do not use an extension cord."
     },
     "helen carter": {
+        "order_number": "DD-10003",
         "name": "Helen Carter",
         "equipment": "Wheelchair",
         "delivery_date": "April 3, 2026",
@@ -89,6 +92,7 @@ PATIENTS = {
         "special_instructions": "Please have the wheelchair near the front door on pickup day."
     },
     "james wilson": {
+        "order_number": "DD-10004",
         "name": "James Wilson",
         "equipment": "Hospital Bed and Bedside Commode",
         "delivery_date": "April 6, 2026",
@@ -113,6 +117,7 @@ PATIENTS = {
         "special_instructions": "Both items must be delivered and signed for together. Do not accept a partial delivery."
     },
     "dorothy harris": {
+        "order_number": "DD-10005",
         "name": "Dorothy Harris",
         "equipment": "Rollator Walker",
         "delivery_date": "April 4, 2026",
@@ -137,6 +142,7 @@ PATIENTS = {
         "special_instructions": "Patient requested afternoon delivery. Please confirm someone is home after 2 PM."
     },
     "charles martinez": {
+        "order_number": "DD-10006",
         "name": "Charles Martinez",
         "equipment": "Suction Machine",
         "delivery_date": "April 7, 2026",
@@ -161,6 +167,7 @@ PATIENTS = {
         "special_instructions": "This is an urgent delivery. Please ensure someone is available from 8 AM onward."
     },
     "patricia thompson": {
+        "order_number": "DD-10007",
         "name": "Patricia Thompson",
         "equipment": "Hospital Bed and Oxygen Concentrator",
         "delivery_date": "April 5, 2026",
@@ -186,6 +193,7 @@ PATIENTS = {
         "special_instructions": "Family prefers setup to be completed before noon if possible."
     },
     "william anderson": {
+        "order_number": "DD-10008",
         "name": "William Anderson",
         "equipment": "Wheelchair",
         "delivery_date": "April 3, 2026",
@@ -210,6 +218,7 @@ PATIENTS = {
         "special_instructions": "Family requested coordination before pickup. Please call ahead at least one hour before arrival."
     },
     "barbara jackson": {
+        "order_number": "DD-10009",
         "name": "Barbara Jackson",
         "equipment": "Hospital Bed",
         "delivery_date": "April 8, 2026",
@@ -234,6 +243,7 @@ PATIENTS = {
         "special_instructions": "Delivery must be completed on the first floor only. Do not attempt stairs."
     },
     "richard white": {
+        "order_number": "DD-10010",
         "name": "Richard White",
         "equipment": "Oxygen Concentrator and Rollator Walker",
         "delivery_date": "April 6, 2026",
@@ -278,16 +288,17 @@ TOOLS = [
     {
         "name": "lookup_patient_record",
         "description": (
-            "Look up a patient record by name. Returns full account details including "
+            "Look up a patient record by order number or patient name. "
+            "Always try the order number first. Returns full account details including "
             "equipment, delivery info, insurance, and technician notes. "
-            "Call this tool as soon as you have the patient's name."
+            "Call this tool as soon as you have the order number or patient name."
         ),
         "input_schema": {
             "type": "object",
             "properties": {
                 "patient_name": {
                     "type": "string",
-                    "description": "The full or partial name of the patient."
+                    "description": "The order number (e.g. DD-10005) or full/partial patient name."
                 }
             },
             "required": ["patient_name"]
@@ -400,26 +411,32 @@ def execute_tool(tool_name, tool_input):
     """Execute a tool call and return the result as a string."""
 
     if tool_name == "lookup_patient_record":
-        name = tool_input.get("patient_name", "").lower()
-        # Fuzzy match — check if any word in the query matches a patient key
+        query = tool_input.get("patient_name", "").strip().lower()
+
+        # Try order number match first (exact, case-insensitive)
         found = None
         for key, patient in PATIENTS.items():
-            name_parts = key.split()
-            for part in name_parts:
-                if part in name and len(part) > 2:
-                    found = patient
-                    break
-            if found:
+            if patient.get("order_number", "").lower() == query:
+                found = patient
                 break
+
+        # Fall back to fuzzy name match
+        if not found:
+            for key, patient in PATIENTS.items():
+                name_parts = key.split()
+                for part in name_parts:
+                    if part in query and len(part) > 2:
+                        found = patient
+                        break
+                if found:
+                    break
+
         if found:
-            return json.dumps({
-                "status": "found",
-                "patient": found
-            })
+            return json.dumps({"status": "found", "patient": found})
         else:
             return json.dumps({
                 "status": "not_found",
-                "message": f"No patient record found for '{tool_input.get('patient_name')}'."
+                "message": f"No record found for '{tool_input.get('patient_name')}'. Please double check the order number."
             })
 
     elif tool_name == "route_to_delivery_agent":
@@ -478,8 +495,8 @@ schedule pickups, and escalate to human CSRs when needed.
 
 Your workflow — follow this exactly:
 1. Greet the caller warmly as Dana and understand what they need.
-2. Ask for the patient name if you do not have it yet.
-3. The moment you have a patient name, call lookup_patient_record immediately.
+2. Ask for the order number. Say: "Could I get your order number? It should start with DD followed by five digits."
+3. The moment you have an order number or name, call lookup_patient_record immediately.
 4. The moment lookup_patient_record returns a result, call the correct routing tool immediately
    based on what the caller originally asked for. Do this in the same turn without waiting.
 5. After routing, respond directly to the caller as Dana, answering their question naturally.
@@ -488,8 +505,8 @@ Routing rules:
 - Delivery questions (status, delays, timing, driver, preparation) → route_to_delivery_agent
 - Return or pickup scheduling → route_to_scheduling_agent
 - Equipment not working, broken, or making noise → route_to_triage_agent
-- Insurance, billing, copay, or coverage questions → the patient record has insurance_coverage,
-  copay, and billing_status fields — answer these yourself after lookup, no routing needed.
+- Insurance, billing, copay, or coverage questions → answer directly using insurance_coverage,
+  copay, and billing_status fields from the patient record — no routing needed.
 - If truly unanswerable from the data → escalate_to_human_csr
 
 CRITICAL RULES:
@@ -831,18 +848,20 @@ with st.sidebar:
         st.info(st.session_state.escalation_summary)
 
     st.divider()
-    st.markdown("### Demo Patients")
+    st.markdown("### Demo Order Numbers")
     st.markdown("""
-- Margaret Johnson
-- Robert Davis
-- Helen Carter
-- James Wilson
-- Dorothy Harris
-- Charles Martinez
-- Patricia Thompson
-- William Anderson
-- Barbara Jackson
-- Richard White
+| Order | Patient |
+|-------|---------|
+| DD-10001 | Margaret Johnson |
+| DD-10002 | Robert Davis |
+| DD-10003 | Helen Carter |
+| DD-10004 | James Wilson |
+| DD-10005 | Dorothy Harris |
+| DD-10006 | Charles Martinez |
+| DD-10007 | Patricia Thompson |
+| DD-10008 | William Anderson |
+| DD-10009 | Barbara Jackson |
+| DD-10010 | Richard White |
 """)
     st.divider()
     if st.button("End Call / Reset", use_container_width=True):
